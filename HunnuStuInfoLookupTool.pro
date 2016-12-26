@@ -13,11 +13,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    resultswnd.cpp \
+    aboutwnd.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    resultswnd.h \
+    aboutwnd.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    resultswnd.ui \
+    aboutwnd.ui
 
 CONFIG += mobility
 MOBILITY = 
