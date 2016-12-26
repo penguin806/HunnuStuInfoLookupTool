@@ -7,8 +7,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setWindowTitle("HunnuStuInfoLookupTool");
+
     this->Man = new QNetworkAccessManager(nullptr);
     this->ResWnd = new ResultsWnd(this);
+    this->AboutWnd = new _AboutWnd(this);
 
     connect(this->Man,
            SIGNAL(finished(QNetworkReply*)),
@@ -17,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(this->ResWnd,SIGNAL(Closed()),
             this,SLOT(ResultsWindowClosed()));
+
+    this->ui->plainTextEdit->document()->
+            setMaximumBlockCount(1);
 
     QStringList ComboText;
     ComboText.append("姓名");
@@ -128,4 +134,9 @@ void MainWindow::SendNetworkRequest()
 void MainWindow::ResultsWindowClosed()
 {
     this->show();
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    this->AboutWnd->show();
 }

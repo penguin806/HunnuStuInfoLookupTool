@@ -1,14 +1,18 @@
 #include "aboutwnd.h"
 #include "ui_aboutwnd.h"
 
-AboutWnd::AboutWnd(QWidget *parent) :
+_AboutWnd::_AboutWnd(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::AboutWnd)
+    ui(new Ui::_AboutWnd)
 {
     ui->setupUi(this);
+    this->setWindowFlags(this->windowFlags() |
+                         Qt::WindowStaysOnTopHint |
+                         Qt::WindowCloseButtonHint);
+    this->ui->label->setOpenExternalLinks(true);
 }
 
-AboutWnd::~AboutWnd()
+_AboutWnd::~_AboutWnd()
 {
     delete ui;
 }

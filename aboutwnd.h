@@ -4,19 +4,19 @@
 #include <QMainWindow>
 
 namespace Ui {
-class AboutWnd;
+class _AboutWnd;
 }
 
-class AboutWnd : public QMainWindow
+class _AboutWnd : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit AboutWnd(QWidget *parent = 0);
-    ~AboutWnd();
+    explicit _AboutWnd(QWidget *parent = 0);
+    ~_AboutWnd();
 
 private:
-    Ui::AboutWnd *ui;
+    Ui::_AboutWnd *ui;
 };
 
 #endif // ABOUTWND_H
