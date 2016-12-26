@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,7 +19,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     resultswnd.h \
-    aboutwnd.h
+    aboutwnd.h \
+    xsnow.h
 
 FORMS    += mainwindow.ui \
     resultswnd.ui \
