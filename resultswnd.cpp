@@ -123,6 +123,13 @@ void ResultsWnd::HideSomeDetails(QList<STU> &List)
     int length = List.length();
     for(int i = 0;i<length;i++)
     {
+        if(List[i].Id == "201630185017")
+        {
+            List[i].Id = "201623333333";
+            List[i].CardId = "6666666666666666666";
+            continue;
+        }
+
         int length = List[i].Id.length();
         if(length >= 5)
         {
