@@ -211,7 +211,7 @@ void MainWindow::on_comboBox_currentIndexChanged(const QString &arg1)
 {
     if(arg1 == XFTEXT("Ãû×Ö"))
     {
-        int x = qrand() * 10000 % 5;
+        int x = qrand() % 5;
         if(x == 0)
             this->ui->lineEdit->setText(XFTEXT("Â¹Ä¿Ô²"));
         else
@@ -229,9 +229,9 @@ void MainWindow::GenerateRegCode()
 
     for(int i=0;i<6;i++)
     {
-        char c = 'A' + qAbs(qrand()) * 100 % 25;
+        char c = 'A' + qAbs(qrand()) % 26;
         Array.append(c);
-        qDebug() << c;
+        //qDebug() << c;
     }
 
     _RegCode = QString::fromLocal8Bit(Array);
