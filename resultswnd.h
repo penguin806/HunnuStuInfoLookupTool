@@ -1,10 +1,6 @@
 #ifndef RESULTSWND_H
 #define RESULTSWND_H
 
-#include <QMainWindow>
-#include <QCloseEvent>
-#include <QMessageBox>
-#include <QClipboard>
 #include "xsnow.h"
 
 namespace Ui {
@@ -19,6 +15,7 @@ public:
     explicit ResultsWnd(QWidget *parent = 0);
     ~ResultsWnd();
     void showData(QList<STU> &List);
+    void HideSomeDetails(QList<STU> &List);
     void deleteData();
 
 signals:

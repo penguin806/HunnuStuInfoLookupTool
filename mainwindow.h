@@ -1,14 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QTextCodec>
-#include <QRegExp>
-#include <QTime>
-#include <QDebug>
 #include "xsnow.h"
 #include "resultswnd.h"
 #include "aboutwnd.h"
@@ -26,6 +18,10 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void SendNetworkRequest();
+    static void GenerateRegCode();
+    static void GetRegisterInfo();
+    static bool IsRegistered();
+    static void WriteRegKey(QString _key);
 
 private slots:
     void on_pushButton_clicked();
@@ -33,7 +29,6 @@ private slots:
     void RequestFinished(QNetworkReply *reply);
 
     void on_pushButton_2_clicked();
-
     void on_comboBox_currentIndexChanged(const QString &arg1);
 
 private:

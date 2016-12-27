@@ -7,7 +7,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->setWindowTitle("HunnuStuInfoLookupTool");
+    if(_bRegistered)
+    {
+        this->setWindowTitle(XFTEXT("湖师大搜索引擎"));
+    }
+    else
+    {
+        this->setWindowTitle(XFTEXT("湖师大搜索引擎 [未注册]"));
+    }
+
     this->setWindowIcon(QIcon(":/resource/HUNNU.ico"));
     this->ui->pushButton->setDefault(true);
 
@@ -52,6 +60,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+    qDebug() << "saddsadsadsaas";
     this->SendNetworkRequest();
 }
 
@@ -136,7 +145,12 @@ void MainWindow::RequestFinished(QNetworkReply *reply)
             count++;
         }
     }
+    reply->deleteLater();
 
+    if(_bRegistered == false)
+    {
+        this->ResWnd->HideSomeDetails(StudentInfoList);
+    }
     this->ResWnd->showData(StudentInfoList);
     this->ResWnd->show();
     this->hide();
@@ -157,19 +171,19 @@ void MainWindow::SendNetworkRequest()
     QByteArray buf_encoded =
         buf_gb2312.toPercentEncoding();
 
-    if(this->ui->comboBox->currentText() == "名字")
+    if(this->ui->comboBox->currentText() == XFTEXT("名字"))
     {
         formdata.append("TXTXH=&TXTXM=");
         formdata.append(buf_encoded);
         formdata.append("&TXTZH=&TXTSFZH=&CmdFind=%A1%A1%B2%E9%A1%A1%D1%AF%A1%A1");
     }
-    else if(this->ui->comboBox->currentText() == "银行卡号")
+    else if(this->ui->comboBox->currentText() == XFTEXT("银行卡号"))
     {
         formdata.append("TXTXH=&TXTXM=&TXTZH=");
         formdata.append(buf_encoded);
         formdata.append("&TXTSFZH=&CmdFind=%A1%A1%B2%E9%A1%A1%D1%AF%A1%A1");
     }
-    else if(this->ui->comboBox->currentText() == "身份证号")
+    else if(this->ui->comboBox->currentText() == XFTEXT("身份证号"))
     {
         formdata.append("TXTXH=&TXTXM=&TXTZH=&TXTSFZH=");
         formdata.append(buf_encoded);
@@ -195,9 +209,6 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_comboBox_currentIndexChanged(const QString &arg1)
 {
-    QTime time = QTime::currentTime();
-    qsrand(time.msec() + time.second());
-
     if(arg1 == XFTEXT("名字"))
     {
         int x = qrand() * 10000 % 5;
@@ -210,4 +221,114 @@ void MainWindow::on_comboBox_currentIndexChanged(const QString &arg1)
     {
         this->ui->lineEdit->setText("233333");
     }
+}
+
+void MainWindow::GenerateRegCode()
+{
+    QByteArray Array("XSNOW");
+
+    for(int i=0;i<6;i++)
+    {
+        QChar c = 'A' + qrand() * 10000 % 26;
+        Array.append(c);
+    }
+
+    _RegCode = Array;
+
+#ifdef Q_OS_WIN
+    QSettings reg("HKEY_CURRENT_USER\\SOFTWARE\\XSNOW\\HUNNUSTUINFO",
+                  QSettings::NativeFormat);
+#else
+    QSettings reg("Xsnow.info",QSettings::NativeFormat);
+#endif
+
+    reg.setValue("RegCode", _RegCode);
+}
+
+void MainWindow::GetRegisterInfo()
+{
+#ifdef Q_OS_WIN
+    QSettings reg("HKEY_CURRENT_USER\\SOFTWARE\\XSNOW\\HUNNUSTUINFO",
+                  QSettings::NativeFormat);
+#else
+    QSettings reg("Xsnow.info",QSettings::NativeFormat);
+#endif
+    QString Buffer;
+    Buffer = reg.value("RegCode").toString();
+    if(Buffer.isEmpty())
+    {
+        MainWindow::GenerateRegCode();
+    }
+    else
+    {
+        _RegCode = Buffer;
+    }
+
+    Buffer = reg.value("RegKey").toString();
+    if(Buffer.isEmpty() == false)
+    {
+        _RegKey = Buffer;
+    }
+}
+
+bool MainWindow::IsRegistered()
+{
+    const QByteArray Table("XUEFENGLOVEXINXIN");
+    int lTable = Table.length();
+
+    if(_RegCode == "XUEFENGLOVEXINXINFOREVER")
+    {
+        MainWindow::WriteRegKey("XUEFENGLOVEXINXINFOREVER");
+        return true;
+    }
+
+    QString code = _RegCode;
+    QString key(_RegKey);
+    QByteArray regcode = code.toLocal8Bit();
+    QByteArray regkey = key.toLocal8Bit();
+
+    int lregcode = regcode.length();
+    int lregkey = regkey.length();
+
+    if(lregcode < 11 || lregkey < 11 ||
+            lregcode != lregkey)
+    {
+        MainWindow::WriteRegKey("");
+        return false;
+    }
+
+    int i = 0;
+    for(;i<5;i++)
+    {
+        if(regcode[i] != regkey[i])
+        {
+            MainWindow::WriteRegKey("");
+            return false;
+        }
+    }
+
+
+    for(;i<lregcode;i++)
+    {
+        QChar t = 'A' + (regcode[i] +
+                         Table[i % lTable])%26;
+        if(t != QChar(regkey[i]))
+        {
+            MainWindow::WriteRegKey("");
+            return false;
+        }
+    }
+    return true;
+}
+
+void MainWindow::WriteRegKey(QString _key)
+{
+#ifdef Q_OS_WIN
+    QSettings reg("HKEY_CURRENT_USER\\SOFTWARE\\XSNOW\\HUNNUSTUINFO",
+                  QSettings::NativeFormat);
+#else
+    QSettings reg("Xsnow.info",QSettings::NativeFormat);
+#endif
+
+    reg.setValue("RegKey",_key);
 }

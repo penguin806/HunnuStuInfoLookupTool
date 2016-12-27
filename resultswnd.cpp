@@ -118,3 +118,21 @@ void ResultsWnd::TableItemClicked(int row, int col)
 
 }
 
+void ResultsWnd::HideSomeDetails(QList<STU> &List)
+{
+    int length = List.length();
+    for(int i = 0;i<length;i++)
+    {
+        int length = List[i].Id.length();
+        if(length >= 5)
+        {
+            List[i].Id.replace(length-4,2,"**");
+        }
+
+        length = List[i].CardId.length();
+        if(length >= 8)
+        {
+            List[i].CardId.replace(length-7, 5,"*****");
+        }
+    }
+}

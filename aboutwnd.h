@@ -1,7 +1,7 @@
 #ifndef ABOUTWND_H
 #define ABOUTWND_H
 
-#include <QMainWindow>
+#include "xsnow.h"
 
 namespace Ui {
 class _AboutWnd;
@@ -17,6 +17,8 @@ public:
 
 private slots:
     void on_pushButton_2_clicked();
+    void on_lineEdit_selectionChanged();
+    void on_pushButton_clicked();
 
 private:
     Ui::_AboutWnd *ui;
