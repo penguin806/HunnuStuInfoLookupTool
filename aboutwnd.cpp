@@ -16,3 +16,8 @@ _AboutWnd::~_AboutWnd()
 {
     delete ui;
 }
+
+void _AboutWnd::on_pushButton_2_clicked()
+{
+    this->close();
+}

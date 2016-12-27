@@ -7,6 +7,9 @@ ResultsWnd::ResultsWnd(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QTextCodec *codec = QTextCodec::codecForName("gb2312");
+    QTextCodec::setCodecForLocale(codec);
+
 #ifdef Q_OS_WIN
     this->ui->statusbar->showMessage("Tip: 双击查看详情~",5000);
 

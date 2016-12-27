@@ -127,7 +127,7 @@ void MainWindow::SendNetworkRequest()
     QByteArray buf_encoded =
         buf_gb2312.toPercentEncoding();
 
-    if(this->ui->comboBox->currentText() == "姓名")
+    if(this->ui->comboBox->currentText() == "名字")
     {
         formdata.append("TXTXH=&TXTXM=");
         formdata.append(buf_encoded);
