@@ -52,6 +52,6 @@ void _AboutWnd::on_pushButton_clicked()
     MainWindow::WriteRegKey(_RegKey);
 
     QMessageBox::information(this,
-                 "雪峰^_^","注册信息写入成功, Relaunch...");
+         XFTEXT("雪峰^_^"),XFTEXT("注册信息写入成功, Relaunch..."));
     qApp->quit();
 }

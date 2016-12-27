@@ -229,11 +229,12 @@ void MainWindow::GenerateRegCode()
 
     for(int i=0;i<6;i++)
     {
-        QChar c = 'A' + qrand() * 10000 % 26;
+        char c = 'A' + qAbs(qrand()) * 100 % 25;
         Array.append(c);
+        qDebug() << c;
     }
 
-    _RegCode = Array;
+    _RegCode = QString::fromLocal8Bit(Array);
 
 #ifdef Q_OS_WIN
     QSettings reg("HKEY_CURRENT_USER\\SOFTWARE\\XSNOW\\HUNNUSTUINFO",
@@ -255,7 +256,7 @@ void MainWindow::GetRegisterInfo()
 #endif
     QString Buffer;
     Buffer = reg.value("RegCode").toString();
-    if(Buffer.isEmpty())
+    if(Buffer.length()!=11)
     {
         MainWindow::GenerateRegCode();
     }
@@ -276,7 +277,7 @@ bool MainWindow::IsRegistered()
     const QByteArray Table("XUEFENGLOVEXINXIN");
     int lTable = Table.length();
 
-    if(_RegCode == "XUEFENGLOVEXINXINFOREVER")
+    if(_RegKey == "XUEFENGLOVEXINXINFOREVER")
     {
         MainWindow::WriteRegKey("XUEFENGLOVEXINXINFOREVER");
         return true;

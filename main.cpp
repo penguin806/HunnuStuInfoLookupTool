@@ -1,9 +1,6 @@
 #include "xsnow.h"
 #include "mainwindow.h"
-#include <QApplication>
-#include <QString>
-#include <QTextCodec>
-#include <QTime>
+
 
 QString _RegCode, _RegKey;
 bool _bRegistered;

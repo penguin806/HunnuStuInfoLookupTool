@@ -1,5 +1,6 @@
 #ifndef XSNOW_H
 #define XSNOW_H
+#include <QApplication>
 #include <QMainWindow>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -11,6 +12,7 @@
 #include <QMessageBox>
 #include <QClipboard>
 #include <QString>
+#include <QTime>
 #include <QDebug>
 
 //#ifdef Q_OS_WIN
