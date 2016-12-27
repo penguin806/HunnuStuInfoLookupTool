@@ -7,18 +7,15 @@ ResultsWnd::ResultsWnd(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QTextCodec *codec = QTextCodec::codecForName("gb2312");
-    QTextCodec::setCodecForLocale(codec);
-
 #ifdef Q_OS_WIN
-    this->ui->statusbar->showMessage("Tip: ÂèåÂáªÊü•ÁúãËØ¶ÊÉÖ~",5000);
+    this->ui->statusbar->showMessage(XFTEXT("Tip: À´ª˜≤Èø¥œÍ«È~"),10000);
 
     connect(this->ui->tableWidget,
             SIGNAL(cellDoubleClicked(int,int)),
             this,
             SLOT(TableItemClicked(int,int)));
 #else
-    this->ui->statusbar->showMessage("Tip: ÂçïÂáªÊü•ÁúãËØ¶ÊÉÖ~",5000);
+    this->ui->statusbar->showMessage(XFTEXT("Tip: µ•ª˜≤Èø¥œÍ«È~"),10000);
 
     connect(this->ui->tableWidget,
             SIGNAL(cellClicked(int,int)),
@@ -44,6 +41,12 @@ void ResultsWnd::on_pushButton_clicked()
 
 void ResultsWnd::showData(QList<STU> &List)
 {
+    if(List.length() < 1)
+    {
+        QMessageBox::information(this,
+                     "233","404 Not Found     \r\n");
+    }
+
     this->ui->tableWidget->setRowCount(
                 List.length()+1);
 
@@ -110,8 +113,8 @@ void ResultsWnd::TableItemClicked(int row, int col)
     clipboard->setText(Buffer);
 
     QMessageBox::information(this,
-                 "Èõ™Â≥∞",Buffer);
-    this->ui->statusbar->showMessage("Â∑≤Â§çÂà∂Âà∞Ââ™ÂàáÊùø...",2000);
+                 XFTEXT("—©∑Â"),Buffer);
+    this->ui->statusbar->showMessage(XFTEXT("“—∏¥÷∆µΩºÙ«–∞Â..."),2000);
 
 }
 

@@ -5,7 +5,6 @@
 #include <QCloseEvent>
 #include <QMessageBox>
 #include <QClipboard>
-#include <QTextCodec>
 #include "xsnow.h"
 
 namespace Ui {

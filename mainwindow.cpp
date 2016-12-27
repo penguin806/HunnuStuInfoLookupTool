@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     this->setWindowTitle("HunnuStuInfoLookupTool");
+    this->setWindowIcon(QIcon(":/resource/HUNNU.ico"));
     this->ui->pushButton->setDefault(true);
 
     this->Man = new QNetworkAccessManager(nullptr);
@@ -33,10 +34,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //       setMaximumBlockCount(1);
 
     QStringList ComboText;
-    ComboText.append("åå­—");
-    // ComboText.append("å­¦å·");
-    ComboText.append("é“¶è¡Œå¡å·");
-    ComboText.append("èº«ä»½è¯å·");
+    ComboText.append(XFTEXT("Ãû×Ö"));
+    // ComboText.append(XFTEXT("Ñ§ºÅ"));
+    ComboText.append(XFTEXT("ÒøÐÐ¿¨ºÅ"));
+    ComboText.append(XFTEXT("Éí·ÝÖ¤ºÅ"));
 
     this->ui->comboBox->addItems(ComboText);
     this->ui->lineEdit->setText("");
@@ -56,6 +57,35 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::RequestFinished(QNetworkReply *reply)
 {
+    if(reply->error() != QNetworkReply::NoError)
+    {
+        qDebug() << reply->error();
+        switch (reply->error()) {
+        case QNetworkReply::UnknownNetworkError:
+        case QNetworkReply::TimeoutError:
+        case QNetworkReply::HostNotFoundError:
+            QMessageBox::information(this,
+                         XFTEXT("Ñ©·å"),XFTEXT("WTF, Ã»Íø?"));
+            break;
+        case QNetworkReply::RemoteHostClosedError:
+        case QNetworkReply::InternalServerError:
+            QMessageBox::information(this,
+                         XFTEXT("Ñ©·å"), XFTEXT("·þÎñÆ÷¿ªÐ¡²îÁË."));
+            break;
+        default:
+        {
+            QString _Buffer = "Error: " +
+                    reply->errorString() +
+                    "\r\nE-mail me if you have any question.";
+            QMessageBox::information(this,XFTEXT("Ñ©·å"),
+                         _Buffer);
+            break;
+
+        }
+        }
+        return;
+    }
+
     QString Buffer;
     Buffer = QString::fromLocal8Bit(reply->readAll());
 
@@ -127,19 +157,19 @@ void MainWindow::SendNetworkRequest()
     QByteArray buf_encoded =
         buf_gb2312.toPercentEncoding();
 
-    if(this->ui->comboBox->currentText() == "åå­—")
+    if(this->ui->comboBox->currentText() == "Ãû×Ö")
     {
         formdata.append("TXTXH=&TXTXM=");
         formdata.append(buf_encoded);
         formdata.append("&TXTZH=&TXTSFZH=&CmdFind=%A1%A1%B2%E9%A1%A1%D1%AF%A1%A1");
     }
-    else if(this->ui->comboBox->currentText() == "é“¶è¡Œå¡å·")
+    else if(this->ui->comboBox->currentText() == "ÒøÐÐ¿¨ºÅ")
     {
         formdata.append("TXTXH=&TXTXM=&TXTZH=");
         formdata.append(buf_encoded);
         formdata.append("&TXTSFZH=&CmdFind=%A1%A1%B2%E9%A1%A1%D1%AF%A1%A1");
     }
-    else if(this->ui->comboBox->currentText() == "èº«ä»½è¯å·")
+    else if(this->ui->comboBox->currentText() == "Éí·ÝÖ¤ºÅ")
     {
         formdata.append("TXTXH=&TXTXM=&TXTZH=&TXTSFZH=");
         formdata.append(buf_encoded);
@@ -166,15 +196,15 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_comboBox_currentIndexChanged(const QString &arg1)
 {
     QTime time = QTime::currentTime();
-    qsrand(time.msec());
+    qsrand(time.msec() + time.second());
 
-    if(arg1 == "åå­—")
+    if(arg1 == XFTEXT("Ãû×Ö"))
     {
-        int x = qrand() * 1000 % 4;
+        int x = qrand() * 10000 % 5;
         if(x == 0)
-            this->ui->lineEdit->setText("é¹¿ç›®åœ†é¦™");
+            this->ui->lineEdit->setText(XFTEXT("Â¹Ä¿Ô²"));
         else
-            this->ui->lineEdit->setText("é›ªå³°");
+            this->ui->lineEdit->setText(XFTEXT("Ñ©·å"));
     }
     else
     {

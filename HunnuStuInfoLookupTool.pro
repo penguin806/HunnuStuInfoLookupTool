@@ -41,3 +41,8 @@ DISTFILES += \
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
+RESOURCES += \
+    res.qrc
+
+RC_FILE = \
+    resource/xSnow.rc
