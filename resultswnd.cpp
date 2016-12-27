@@ -7,6 +7,22 @@ ResultsWnd::ResultsWnd(QWidget *parent) :
 {
     ui->setupUi(this);
 
+#ifdef Q_OS_WIN
+    this->ui->statusbar->showMessage("Tip: 双击查看详情~",5000);
+
+    connect(this->ui->tableWidget,
+            SIGNAL(cellDoubleClicked(int,int)),
+            this,
+            SLOT(TableItemClicked(int,int)));
+#else
+    this->ui->statusbar->showMessage("Tip: 单击查看详情~",5000);
+
+    connect(this->ui->tableWidget,
+            SIGNAL(cellClicked(int,int)),
+            this,
+            SLOT(TableItemClicked(int,int)));
+#endif
+
     this->ui->tableWidget->setFont(QFont("Microsoft YaHei"));
     this->ui->tableWidget->setEditTriggers(QTableWidget::NoEditTriggers);
     this->ui->tableWidget->horizontalHeader()->
@@ -74,3 +90,25 @@ void ResultsWnd::closeEvent(QCloseEvent *event)
     this->deleteData();
     event->accept();
 }
+
+void ResultsWnd::TableItemClicked(int row, int col)
+{
+    QString Buffer;
+    QTableWidgetItem *item;
+    item = this->ui->tableWidget->item(row,col);
+
+    if(item == nullptr)
+    {
+        return;
+    }
+    Buffer = item->text();
+
+    QClipboard* clipboard = QApplication::clipboard();
+    clipboard->setText(Buffer);
+
+    QMessageBox::information(this,
+                 "雪峰",Buffer);
+    this->ui->statusbar->showMessage("已复制到剪切板...",2000);
+
+}
+

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QCloseEvent>
+#include <QMessageBox>
+#include <QClipboard>
 #include "xsnow.h"
 
 namespace Ui {
@@ -24,6 +26,7 @@ signals:
 
 private slots:
     void on_pushButton_clicked();
+    void TableItemClicked(int row,int col);
 
 protected:
     void closeEvent(QCloseEvent *event);
