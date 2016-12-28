@@ -4,5 +4,5 @@
 
 ![Search](http://lazypenguin.qiniudn.com/image/20161228/Search.gif)  
 
-![Register](http://lazypenguin.qiniudn.com/image/20161228/Search.gif)  
+![Register](http://lazypenguin.qiniudn.com/image/20161228/Register.gif)  
 
