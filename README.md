@@ -2,7 +2,7 @@
 湖南师范大学学生信息查询工具 By 雪峰
 
 
-![Search](http://lazypenguin.qiniudn.com/image/20161228/Search.gif)  
+![Search](//www.xuefeng.space/images/uploads/20161228/Search.gif)  
 
-![Register](http://lazypenguin.qiniudn.com/image/20161228/Register.gif)  
+![Register](//www.xuefeng.space/images/uploads/20161228/Register.gif)  
 
